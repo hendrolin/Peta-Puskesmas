@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/LetakPuskesmas_1.js"></script>
+        <script src="data/BatasWilayahKerjaPusk_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-8.631892748109754,119.87550136807927],[-8.415256223109752,120.26306939512195]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        function pop_LetakPuskesmas_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Name</th>\
+                        <td>' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_LetakPuskesmas_1_0() {
+            return {
+                pane: 'pane_LetakPuskesmas_1',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/red-marker.svg',
+            iconSize: [15.200000000000006, 15.200000000000006]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_LetakPuskesmas_1');
+        map.getPane('pane_LetakPuskesmas_1').style.zIndex = 401;
+        map.getPane('pane_LetakPuskesmas_1').style['mix-blend-mode'] = 'normal';
+        var layer_LetakPuskesmas_1 = new L.geoJson(json_LetakPuskesmas_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_LetakPuskesmas_1',
+            layerName: 'layer_LetakPuskesmas_1',
+            pane: 'pane_LetakPuskesmas_1',
+            onEachFeature: pop_LetakPuskesmas_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_LetakPuskesmas_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_LetakPuskesmas_1);
+        map.addLayer(layer_LetakPuskesmas_1);
+        function pop_BatasWilayahKerjaPusk_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WADMKK'] !== null ? autolinker.link(feature.properties['WADMKK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KEC'] !== null ? autolinker.link(feature.properties['KEC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PUSK'] !== null ? autolinker.link(feature.properties['PUSK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_BatasWilayahKerjaPusk_2_0() {
+            return {
+                pane: 'pane_BatasWilayahKerjaPusk_2',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_BatasWilayahKerjaPusk_2');
+        map.getPane('pane_BatasWilayahKerjaPusk_2').style.zIndex = 402;
+        map.getPane('pane_BatasWilayahKerjaPusk_2').style['mix-blend-mode'] = 'normal';
+        var layer_BatasWilayahKerjaPusk_2 = new L.geoJson(json_BatasWilayahKerjaPusk_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BatasWilayahKerjaPusk_2',
+            layerName: 'layer_BatasWilayahKerjaPusk_2',
+            pane: 'pane_BatasWilayahKerjaPusk_2',
+            onEachFeature: pop_BatasWilayahKerjaPusk_2,
+            style: style_BatasWilayahKerjaPusk_2_0,
+        });
+        bounds_group.addLayer(layer_BatasWilayahKerjaPusk_2);
+        map.addLayer(layer_BatasWilayahKerjaPusk_2);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/BatasWilayahKerjaPusk_2.png" /> Batas Wilayah Kerja Pusk': layer_BatasWilayahKerjaPusk_2,'<img src="legend/LetakPuskesmas_1.png" /> Letak Puskesmas': layer_LetakPuskesmas_1,"Google Satellite": layer_GoogleSatellite_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_LetakPuskesmas_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #ffffff; font-size: 10pt; font-family: \'Mongolian Baiti\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_LetakPuskesmas_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        map.addControl(new L.Control.Search({
+            layer: layer_LetakPuskesmas_1,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Name'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        resetLabels([layer_LetakPuskesmas_1]);
+        map.on("zoomend", function(){
+            resetLabels([layer_LetakPuskesmas_1]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_LetakPuskesmas_1]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_LetakPuskesmas_1]);
+        });
+        </script>
+    </body>
+</html>
